@@ -3,8 +3,6 @@ package com.financial.service.services.card;
 import com.financial.service.entities.Card;
 import com.financial.service.repositories.AccountRepository;
 import com.financial.service.repositories.CardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -27,17 +25,17 @@ public class CardService {
                         return cardRepository.save(card);
 
                     } else {
-                        // Handle the case when the associated account does not exist
+                        // Handle the case when the associated account does not exist - Return a good message.
                         return Mono.error(new IllegalArgumentException("Account does not exist"));
                     }
                 });
     }
-
     public Mono<Card> getCardById(Integer cardId) {
         return cardRepository.findById(cardId);
     }
 
     public Flux<Card> getAllCards() {
+        //Implement pagination
         return cardRepository.findAll();
     }
     public Flux<Card> getCardsByAccountId(Integer accountId) {

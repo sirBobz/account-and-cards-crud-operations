@@ -1,10 +1,8 @@
 package com.financial.service.controllers;
+
 import com.financial.service.entities.Card;
 import com.financial.service.services.card.CardService;
-import io.r2dbc.spi.Parameter;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

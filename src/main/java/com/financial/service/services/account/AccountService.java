@@ -27,6 +27,7 @@ public class AccountService {
     }
 
     public Mono<Void> deleteAccountById(Integer accountId) {
+        // Cascades to the cards associated to the account id
         return accountRepository.deleteById(accountId);
     }
 
@@ -43,6 +44,7 @@ public class AccountService {
     }
 
     public Flux<Account> getAllAccounts() {
+        //Implement pagination
         return accountRepository.findAll();
     }
 }
