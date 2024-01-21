@@ -1,4 +1,4 @@
-# Card and Account API Documentation
+# Account and Card API 
 
 ## Prerequisites
 
