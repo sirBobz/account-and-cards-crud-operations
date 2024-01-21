@@ -1,19 +1,36 @@
 package com.financial.service.services.card;
 
 import com.financial.service.entities.Card;
+import com.financial.service.repositories.AccountRepository;
 import com.financial.service.repositories.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
 public class CardService {
-    @Autowired
-    private CardRepository cardRepository;
+
+    private final CardRepository cardRepository;
+    private final AccountRepository accountRepository;
+
+    public CardService(CardRepository cardRepository, AccountRepository accountRepository) {
+        this.cardRepository = cardRepository;
+        this.accountRepository = accountRepository;
+    }
 
     public Mono<Card> createCard(Card card) {
-        return cardRepository.save(card);
+        return accountRepository.existsById(card.getAccountId())
+                .flatMap(exists -> {
+                    if (exists) {
+                        return cardRepository.save(card);
+
+                    } else {
+                        // Handle the case when the associated account does not exist
+                        return Mono.error(new IllegalArgumentException("Account does not exist"));
+                    }
+                });
     }
 
     public Mono<Card> getCardById(Integer cardId) {
@@ -23,7 +40,6 @@ public class CardService {
     public Flux<Card> getAllCards() {
         return cardRepository.findAll();
     }
-
     public Flux<Card> getCardsByAccountId(Integer accountId) {
         return cardRepository.findByAccountId(accountId);
     }
