@@ -1,0 +1,18 @@
+
+
+CREATE TABLE Account (
+    id SERIAL PRIMARY KEY,
+    accountId INTEGER NOT NULL,
+    iban VARCHAR NOT NULL,
+    bicSwift VARCHAR NOT NULL,
+    clientId INTEGER NOT NULL
+);
+
+
+CREATE TABLE Card (
+    id SERIAL PRIMARY KEY,
+    cardId INTEGER NOT NULL,
+    cardAlias VARCHAR NOT NULL,
+    cardType VARCHAR NOT NULL,
+    accountId INTEGER NOT NULL
+);
